@@ -114,7 +114,7 @@
 
 	// Rotate shield's animation relative to located ship
 	if(GLOB.using_map.use_overmap)
-		var/obj/effect/overmap/visitable/ship/sector = map_sectors["[src.z]"]
+		var/obj/effect/overmap/visitable/ship/sector = SSmapping.map_sectors["[src.z]"]
 		if(sector && istype(sector))
 			if(!sector.check_ownership(src))
 				for(var/obj/effect/overmap/visitable/ship/candidate in sector)

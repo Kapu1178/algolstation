@@ -218,7 +218,7 @@ GLOBAL_VAR(planet_repopulation_disabled)
 
 /obj/effect/landmark/exoplanet_spawn/LateInitialize()
 	. = ..()
-	var/obj/effect/overmap/visitable/sector/exoplanet/E = map_sectors["[z]"]
+	var/obj/effect/overmap/visitable/sector/exoplanet/E = SSmapping.map_sectors["[z]"]
 	if (istype(E))
 		do_spawn(E)
 

@@ -513,8 +513,6 @@
 			return global.mannequins_;
 		if("map_count")
 			return global.map_count;
-		if("map_sectors")
-			return global.map_sectors;
 		if("mark")
 			return global.mark;
 		if("maze_cell_count")
@@ -685,8 +683,6 @@
 			return global.robot_hud_colours;
 		if("robot_inventory")
 			return global.robot_inventory;
-		if("round_start_time")
-			return global.round_start_time;
 		if("roundstart_hour")
 			return global.roundstart_hour;
 		if("rune_list")
@@ -837,7 +833,7 @@
 			return global.z_levels;
 		if("zone_blocked")
 			return global.zone_blocked;
-		
+
 /proc/writeglobal(which, newval)
 	switch(which)
 		if("ANTAG_FREQS")
@@ -1352,8 +1348,6 @@
 			global.mannequins_=newval;
 		if("map_count")
 			global.map_count=newval;
-		if("map_sectors")
-			global.map_sectors=newval;
 		if("mark")
 			global.mark=newval;
 		if("maze_cell_count")
@@ -1524,8 +1518,6 @@
 			global.robot_hud_colours=newval;
 		if("robot_inventory")
 			global.robot_inventory=newval;
-		if("round_start_time")
-			global.round_start_time=newval;
 		if("roundstart_hour")
 			global.roundstart_hour=newval;
 		if("rune_list")
@@ -1676,7 +1668,7 @@
 			global.z_levels=newval;
 		if("zone_blocked")
 			global.zone_blocked=newval;
-		
+
 /var/list/_all_globals=list(
 	"ANTAG_FREQS",
 	"AWAY_FREQS_ASSIGNED",
@@ -1934,7 +1926,6 @@
 	"maint_all_access",
 	"mannequins_",
 	"map_count",
-	"map_sectors",
 	"mark",
 	"maze_cell_count",
 	"mechas_list",
@@ -2020,7 +2011,6 @@
 	"robot_custom_icons",
 	"robot_hud_colours",
 	"robot_inventory",
-	"round_start_time",
 	"roundstart_hour",
 	"rune_list",
 	"same_wires",

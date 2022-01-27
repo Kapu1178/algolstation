@@ -85,7 +85,7 @@ GLOBAL_LIST_INIT(exo_event_mob_count,list())// a list of all mobs currently spaw
 				if (get_crewmember_record(M.real_name || M.name))
 					station_players_present = TRUE
 					chosen_area = A
-					chosen_planet = map_sectors["[A.z]"]
+					chosen_planet = SSmapping.map_sectors["[A.z]"]
 					affecting_z = GetConnectedZlevels(A.z)
 
 		if (length(players))
@@ -105,7 +105,7 @@ GLOBAL_LIST_INIT(exo_event_mob_count,list())// a list of all mobs currently spaw
 			return
 
 		chosen_area = pick(sites)
-		chosen_planet = map_sectors["[chosen_area.z]"]
+		chosen_planet = SSmapping.map_sectors["[chosen_area.z]"]
 		affecting_z = GetConnectedZlevels(chosen_area.z)
 
 	if (!chosen_area)

@@ -7,6 +7,8 @@ SUBSYSTEM_DEF(ticker)
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
 	var/pregame_timeleft = 3 MINUTES
+	var/round_start_time = 0
+	var/round_start_timeofday = 0
 	var/start_ASAP = FALSE          //the game will start as soon as possible, bypassing all pre-game nonsense
 	var/list/gamemode_vote_results  //Will be a list, in order of preference, of form list(config_tag = number of votes).
 	var/bypass_gamemode_vote = 0    //Intended for use with admin tools. Will avoid voting and ignore any results.
@@ -85,6 +87,8 @@ SUBSYSTEM_DEF(ticker)
 			return
 	// This means we succeeded in picking a game mode.
 	GLOB.using_map.setup_economy()
+	round_start_time = world.time
+	round_start_timeofday = REALTIMEOFDAY
 	Master.SetRunLevel(RUNLEVEL_GAME)
 
 	create_characters() //Create player characters and transfer them

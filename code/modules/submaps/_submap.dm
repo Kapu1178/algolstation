@@ -46,7 +46,7 @@
 		qdel(src)
 		return
 
-	var/obj/effect/overmap/visitable/cell = map_sectors["[associated_z]"]
+	var/obj/effect/overmap/visitable/cell = SSmapping.map_sectors["[associated_z]"]
 	if(istype(cell))
 		sync_cell(cell)
 

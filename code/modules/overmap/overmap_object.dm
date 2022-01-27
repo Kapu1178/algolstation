@@ -4,6 +4,7 @@
 	icon_state = "object"
 	color = "#fffffe"
 
+	var/dimension = DIM_REALSPACE
 	var/known = 1		//shows up on nav computers automatically
 	var/scannable       //if set to TRUE will show up on ship sensors for detailed scans
 

@@ -20,14 +20,14 @@ var/list/cached_space = list()
 
 /obj/effect/overmap/visitable/sector/temporary/proc/register(var/nx, var/ny)
 	forceMove(locate(nx, ny, GLOB.using_map.overmap_z))
-	map_sectors["[map_z[1]]"] = src
+	SSmapping.map_sectors["[map_z[1]]"] = src
 	testing("Temporary sector at zlevel [map_z[1]] moved to coordinates [x],[y]")
 
 /obj/effect/overmap/visitable/sector/temporary/proc/unregister()
 	// Note that any structures left in the zlevel will remain there, and may later turn up at completely different
 	// coordinates if this temporary sector is recycled. Perhaps everything remaining in the zlevel should be destroyed?
 	testing("Caching temporary sector for future use, corresponding zlevel is [map_z[1]], previous coordinates were [x],[y]")
-	map_sectors.Remove(src)
+	SSmapping.map_sectors.Remove(src)
 	src.forceMove(null)
 	cached_space += src
 
@@ -71,7 +71,7 @@ proc/overmap_spacetravel(var/turf/space/T, var/atom/movable/A)
 	if (!T || !A)
 		return
 
-	var/obj/effect/overmap/visitable/M = map_sectors["[T.z]"]
+	var/obj/effect/overmap/visitable/M = SSmapping.map_sectors["[T.z]"]
 	if (!M)
 		return
 

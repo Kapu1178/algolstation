@@ -59,7 +59,7 @@
 
 /obj/effect/overmap/visitable/proc/register_z_levels()
 	for(var/zlevel in map_z)
-		map_sectors["[zlevel]"] = src
+		SSmapping.map_sectors["[zlevel]"] = src
 
 	GLOB.using_map.player_levels |= map_z
 	if(!in_space)
