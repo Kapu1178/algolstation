@@ -1,4 +1,4 @@
-/turf/simulated/var/zone/zone
+/turf/var/zone/zone //What's the worst that could happen?
 /turf/simulated/var/open_directions
 
 /turf/var/needs_air_update = 0
@@ -217,6 +217,7 @@
 	if(!TURF_HAS_VALID_ZONE(src)) //Still no zone, make a new one.
 		var/zone/newzone = new/zone()
 		newzone.add(src)
+		newzone.zone_z_level = src.z
 
 	#ifdef ZASDBG
 		dbg(created)

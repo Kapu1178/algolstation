@@ -42,7 +42,7 @@ turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 	return igniting
 
 /zone/proc/process_fire()
-	var/datum/gas_mixture/burn_gas = air.remove_ratio(vsc.fire_consuption_rate, fire_tiles.len)
+	var/datum/gas_mixture/burn_gas = air.remove_ratio(config.fire_consuption_rate, fire_tiles.len)
 
 	var/firelevel = burn_gas.react(src, fire_tiles, force_burn = 1, no_check = 1)
 
@@ -138,6 +138,8 @@ turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 		qdel(src)
 		return PROCESS_KILL
 
+	GET_LOCAL_VSC
+
 	var/datum/gas_mixture/air_contents = my_tile.return_air()
 
 	if(firelevel > 6)
@@ -205,6 +207,8 @@ turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 	SSair.active_hotspots.Add(src)
 
 /obj/fire/proc/fire_color(var/env_temperature)
+	GET_LOCAL_VSC
+
 	var/temperature = max(4000*sqrt(firelevel/vsc.fire_firelevel_multiplier), env_temperature)
 	return heat2color(temperature)
 
@@ -255,6 +259,8 @@ turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 		total_fuel = gas_fuel + liquid_fuel
 		if(total_fuel <= 0.005)
 			return 0
+
+		GET_LOCAL_VSC
 
 		//*** Determine how fast the fire burns
 
@@ -346,6 +352,8 @@ datum/gas_mixture/proc/check_recombustability(list/fuel_objs)
 
 /datum/gas_mixture/proc/check_combustability(obj/effect/decal/cleanable/liquid_fuel/liquid=null)
 	. = 0
+	GET_LOCAL_VSC
+
 	for(var/g in gas)
 		if(gas_data.flags[g] & XGM_GAS_OXIDIZER && QUANTIZE(gas[g] * vsc.fire_consuption_rate) >= 0.1)
 			. = 1
@@ -365,6 +373,8 @@ datum/gas_mixture/proc/check_recombustability(list/fuel_objs)
 
 //returns a value between 0 and vsc.fire_firelevel_multiplier
 /datum/gas_mixture/proc/calculate_firelevel(total_fuel, total_oxidizers, reaction_limit, gas_volume)
+	GET_LOCAL_VSC
+
 	//Calculates the firelevel based on one equation instead of having to do this multiple times in different areas.
 	var/firelevel = 0
 
@@ -394,12 +404,15 @@ datum/gas_mixture/proc/check_recombustability(list/fuel_objs)
 
 
 /mob/living/proc/FireBurn(var/firelevel, var/last_temperature, var/pressure)
+	GET_LOCAL_VSC
 	var/mx = 5 * firelevel/vsc.fire_firelevel_multiplier * min(pressure / ONE_ATMOSPHERE, 1)
 	apply_damage(2.5*mx, BURN)
 	return mx
 
 
 /mob/living/carbon/human/FireBurn(var/firelevel, var/last_temperature, var/pressure)
+	GET_LOCAL_VSC
+
 	//Burns mobs due to fire. Respects heat transfer coefficients on various body parts.
 	//Due to TG reworking how fireprotection works, this is kinda less meaningful.
 

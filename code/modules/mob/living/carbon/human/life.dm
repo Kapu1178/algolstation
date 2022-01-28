@@ -582,6 +582,8 @@
 
 	if(status_flags & GODMODE)	return 0
 
+	GET_LOCAL_VSC
+
 	//SSD check, if a logged player is awake put them back to sleep!
 	if(ssd_check() && species.get_ssd(src) || player_triggered_sleeping)
 		Sleeping(2)
@@ -657,6 +659,7 @@
 		// If you're dirty, your gloves will become dirty, too.
 		if(gloves && germ_level > gloves.germ_level && prob(10))
 			gloves.germ_level += 1
+
 
 		if(vsc.plc.CONTAMINATION_LOSS)
 			var/total_phoronloss = 0

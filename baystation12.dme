@@ -86,6 +86,7 @@
 #include "code\__defines\dcs\flags.dm"
 #include "code\__defines\dcs\helpers.dm"
 #include "code\__defines\dcs\signals\datum_signals.dm"
+#include "code\__defines\dcs\signals\dimension_signals.dm"
 #include "code\_global_vars\edible.dm"
 #include "code\_global_vars\logging.dm"
 #include "code\_global_vars\mapping.dm"

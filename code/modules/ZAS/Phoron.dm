@@ -75,6 +75,7 @@ obj/var/contaminated = 0
 /mob/proc/pl_effects()
 
 /mob/living/carbon/human/pl_effects()
+	GET_LOCAL_VSC
 	//Handles all the bad things phoron can do.
 
 	//Contamination
@@ -126,6 +127,7 @@ obj/var/contaminated = 0
 			eye_blind += 20
 
 /mob/living/carbon/human/proc/pl_head_protected()
+	GET_LOCAL_VSC
 	//Checks if the head is adequately sealed.
 	if(head)
 		if(vsc.plc.PHORONGUARD_ONLY)
@@ -136,6 +138,7 @@ obj/var/contaminated = 0
 	return 0
 
 /mob/living/carbon/human/proc/pl_suit_protected()
+	GET_LOCAL_VSC
 	//Checks if the suit is adequately sealed.
 	var/coverage = 0
 	for(var/obj/item/protection in list(wear_suit, gloves, shoes))
@@ -159,8 +162,9 @@ obj/var/contaminated = 0
 
 turf/Entered(obj/item/I)
 	. = ..()
+	var/vs_control/vsc = src.zone?.config
 	//Items that are in phoron, but not on a mob, can still be contaminated.
-	if(istype(I) && vsc && vsc.plc.CLOTH_CONTAMINATION && I.can_contaminate())
+	if(istype(I) && vsc?.plc.CLOTH_CONTAMINATION && I.can_contaminate())
 		var/datum/gas_mixture/env = return_air(1)
 		if(!env)
 			return

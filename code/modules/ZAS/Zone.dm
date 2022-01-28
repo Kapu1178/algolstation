@@ -52,12 +52,16 @@ Class Procs:
 	var/list/graphic_add = list()
 	var/list/graphic_remove = list()
 	var/last_air_temperature = TCMB
+	var/vs_control/config
+	var/zone_z_level
 
 /zone/New()
 	SSair.add_zone(src)
 	air.temperature = TCMB
 	air.group_multiplier = 1
 	air.volume = CELL_VOLUME
+	config = vsc
+	RegisterSignal(src, COMSIG_DIMENSION_SHIFT, .proc/on_dimension_shift)
 
 /zone/proc/add(turf/simulated/T)
 #ifdef ZASDBG
@@ -149,7 +153,7 @@ Class Procs:
 	if(air.temperature >= PHORON_FLASHPOINT && !(src in SSair.active_fire_zones) && air.check_combustability() && contents.len)
 		var/turf/T = pick(contents)
 		if(istype(T))
-			T.create_fire(vsc.fire_firelevel_multiplier)
+			T.create_fire(config.fire_firelevel_multiplier)
 
 	// Update gas overlays.
 	if(air.check_tile_graphic(graphic_add, graphic_remove))
@@ -212,3 +216,13 @@ Class Procs:
 
 	//for(var/turf/T in unsimulated_contents)
 //		to_chat(M, "[T] at ([T.x],[T.y])")
+
+/zone/proc/on_dimension_shift(source, z_level, target_dimension)
+	SIGNAL_HANDLER
+	if(zone_z_level != z_level)
+		return
+
+	var/vs_control/new_config = RESOLVE_DIMZAS_ZONE_CONFIG(zone_z_level)
+	if(config == new_config)
+		return
+	config = new_config

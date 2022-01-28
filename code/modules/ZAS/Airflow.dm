@@ -6,6 +6,7 @@ mob/var/tmp/last_airflow_stun = 0
 mob/proc/airflow_stun()
 	if(stat == 2)
 		return 0
+	GET_LOCAL_VSC
 	if(last_airflow_stun > world.time - vsc.airflow_stun_cooldown)	return 0
 
 	if(!(status_flags & CANSTUN) && !(status_flags & CANWEAKEN))
@@ -32,14 +33,15 @@ mob/living/carbon/human/airflow_stun()
 	..()
 
 atom/movable/proc/check_airflow_movable(n)
-
 	if(anchored && !ismob(src)) return 0
+	GET_LOCAL_VSC
 
 	if(!isobj(src) && n < vsc.airflow_dense_pressure) return 0
 
 	return 1
 
 mob/check_airflow_movable(n)
+	GET_LOCAL_VSC
 	if(n < vsc.airflow_heavy_pressure)
 		return 0
 	return 1
@@ -49,6 +51,7 @@ mob/living/silicon/check_airflow_movable()
 
 
 obj/check_airflow_movable(n)
+	GET_LOCAL_VSC
 	if(isnull(w_class))
 		if(n < vsc.airflow_dense_pressure) return 0 //most non-item objs don't have a w_class yet
 	else
@@ -122,12 +125,14 @@ obj/item/airflow_hit(atom/A)
 	airflow_dest = null
 
 mob/living/carbon/human/airflow_hit(atom/A)
+	GET_LOCAL_VSC
 //	for(var/mob/M in hearers(src))
 //		M.show_message("<span class='danger'>[src] slams into [A]!</span>",1,"<span class='danger'>You hear a loud slam!</span>",2)
 	playsound(src.loc, "punch", 25, 1, -1)
 	if (prob(33))
 		loc:add_blood(src)
 		bloody_body(src)
+
 	var/b_loss = min(airflow_speed, (airborne_acceleration*2)) * vsc.airflow_damage
 
 	apply_damage(b_loss/3, BRUTE, BP_HEAD, used_weapon = "Airflow")
